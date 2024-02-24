@@ -20,7 +20,9 @@ WHERE prod.discontinued<>1 AND prod.units_in_stock<25 AND (cat.category_name = '
 ORDER BY prod.units_in_stock
 
 -- 3. Список компаний заказчиков (company_name из табл customers), не сделавших ни одного заказа
-
+SELECT customers.company_name
+FROM customers
+WHERE NOT EXISTS (SELECT * FROM orders WHERE orders.customer_id = customers.customer_id)
 
 -- 4. уникальные названия продуктов, которых заказано ровно 10 единиц (количество заказанных единиц см в колонке quantity табл order_details)
 -- Этот запрос написать именно с использованием подзапроса.
