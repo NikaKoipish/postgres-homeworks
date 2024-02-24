@@ -1,7 +1,12 @@
 -- Напишите запросы, которые выводят следующую информацию:
 -- 1. Название компании заказчика (company_name из табл. customers) и ФИО сотрудника, работающего над заказом этой компании (см таблицу employees),
 -- когда и заказчик и сотрудник зарегистрированы в городе London, а доставку заказа ведет компания United Package (company_name в табл shippers)
-
+SELECT cus.company_name, CONCAT(emp.first_name, ' ', emp.last_name) as fullname
+FROM customers cus
+JOIN orders ord USING(customer_id)
+JOIN employees emp USING(employee_id)
+JOIN shippers ship ON ord.ship_via=ship.shipper_id AND ship.company_name='United Package'
+WHERE cus.city='London' AND emp.city='London'
 
 -- 2. Наименование продукта, количество товара (product_name и units_in_stock в табл products),
 -- имя поставщика и его телефон (contact_name и phone в табл suppliers) для таких продуктов,
